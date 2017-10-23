@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import moment from 'moment';
+
 import { connect } from 'react-redux';
 
 import { deleteEvent } from '../actions';
 
 import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -28,9 +30,9 @@ class MainTable extends Component {
                 return (
                     <TableRow key={event.id}>
                         <TableRowColumn>{event.id}</TableRowColumn>
-                        <TableRowColumn>{event.name}</TableRowColumn>                                        
-                        <TableRowColumn>{event.start.format('HH:mm:ss')}</TableRowColumn>
-                        <TableRowColumn>{event.stop.format('HH:mm:ss')}</TableRowColumn>
+                        <TableRowColumn>{event.name}</TableRowColumn>
+                        <TableRowColumn>{moment(event.start).format('HH:mm:ss')}</TableRowColumn>
+                        <TableRowColumn>{moment(event.stop).format('HH:mm:ss')}</TableRowColumn>
                         <TableRowColumn>{event.spent}</TableRowColumn>
                         <TableRowColumn>
                             <RaisedButton label='info'
@@ -38,8 +40,8 @@ class MainTable extends Component {
                             />
                         </TableRowColumn>
                         <TableRowColumn>
-                            <RaisedButton 
-                                label='delete' 
+                            <RaisedButton
+                                label='delete'
                                 onClick={() => this.deleteEvent(event)}
                             />
                         </TableRowColumn>
@@ -48,11 +50,11 @@ class MainTable extends Component {
             })
         );
     }
-    
+
     render() {
-        return ( 
+        return (
             <Table>
-                <TableHeader 
+                <TableHeader
                     displaySelectAll={false}
                     adjustForCheckbox={false}>
                     <TableRow>
@@ -60,13 +62,13 @@ class MainTable extends Component {
                         <TableHeaderColumn>Name</TableHeaderColumn>
                         <TableHeaderColumn>Time start</TableHeaderColumn>
                         <TableHeaderColumn>Time end</TableHeaderColumn>
-                        <TableHeaderColumn>Time spent</TableHeaderColumn>                                                                       
+                        <TableHeaderColumn>Time spent</TableHeaderColumn>
                         <TableHeaderColumn></TableHeaderColumn>
                         <TableHeaderColumn></TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
                 <TableBody displayRowCheckbox={false}>
-                    { this.renderEvents() }
+                    {this.renderEvents()}
                 </TableBody>
             </Table>
         )
@@ -74,7 +76,7 @@ class MainTable extends Component {
 }
 
 MainTable.contextTypes = {
-  router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

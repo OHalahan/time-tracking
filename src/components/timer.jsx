@@ -5,8 +5,10 @@ import moment from 'moment';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 
-import { addEvent, toggleTimer } from '../actions';
+import { addEvent, startTimer, stopTimer } from '../actions';
 
 const TIME_START = '00:00:00';
 
@@ -16,19 +18,34 @@ class Timer extends Component {
         this.state = {
             action: '',
             timePassed: TIME_START,
-            taskName: ''
+            taskName: '',
+            showDialog: false
         }
 
-        this.counterLink = null;   
+        this.counterLink = null;
     }
 
     componentWillMount() {
-        this.setLabel();
+        const running = this.props.store.timer.running;
+        this.setLabel(running);
+        if (running) { this.startCounter() };
     }
 
-    setLabel() { 
+    componentWillReceiveProps(newProps) {
+        if (newProps.store.timer.running !== this.props.store.timer.running) {
+            this.setLabel(newProps.store.timer.running);
+        }
+    }
+
+    handleClose() {
         this.setState({
-            action: this.props.store.timer.running ? 'stop' : 'start'
+            showDialog: false
+        });
+    }
+
+    setLabel(running) {
+        this.setState({
+            action: running ? 'stop' : 'start'
         });
     }
 
@@ -37,7 +54,8 @@ class Timer extends Component {
             let diff = moment(moment(new Date()).diff(this.props.store.timer.start)).utc().format('HH:mm:ss');
             this.setState({
                 timePassed: diff
-            })}, 1000);
+            })
+        }, 1000);
     }
 
     stopCounter() {
@@ -50,24 +68,36 @@ class Timer extends Component {
 
     toggleState() {
         const { timer } = this.props.store;
-        this.props.toggleTimer();
-        this.setLabel();
-        
-        if (!timer.running) {
-            this.props.addEvent(
-                this.state.taskName,
-                timer.start,
-                timer.stop,
-                this.state.timePassed
-            );
-            this.stopCounter();
+        if (timer.running && !this.state.taskName) {
+            this.setState({
+                showDialog: true
+            });
         } else {
-            this.startCounter();
+            if (timer.running) {
+                this.props.stopTimer();
+                this.props.addEvent(
+                    this.state.taskName,
+                    timer.start,
+                    timer.stop,
+                    this.state.timePassed
+                );
+                this.stopCounter();
+            } else {
+                this.props.startTimer();
+                this.startCounter();
+            }
         }
     }
 
 
     render() {
+        const dialogActions = [
+            <FlatButton
+                label="Close"
+                primary={true}
+                onClick={() => this.handleClose()}
+            />
+        ];
         const style = {
             height: 200,
             width: 200,
@@ -75,20 +105,30 @@ class Timer extends Component {
             textAlign: 'center',
             display: 'inline-block'
         };
-        return ( 
+        return (
             <div>
                 <TextField
                     floatingLabelText="Task name"
                     value={this.state.taskName}
                     onChange={event => this.setState({ taskName: event.target.value })}
+                    errorText={this.state.taskName ? '' : 'Task name is required'}
                 />
                 <Paper style={style} zDepth={1} circle={true}>
-                    { this.state.timePassed }
+                    {this.state.timePassed}
                 </Paper>
-                <RaisedButton 
+                <RaisedButton
                     onClick={() => this.toggleState()}
                     label={this.state.action}
                 />
+                <Dialog
+                    title="No task name"
+                    actions={dialogActions}
+                    modal={false}
+                    open={this.state.showDialog}
+                    onRequestClose={() => this.handleClose()}
+                >
+                    Task name is empty. Please, fill in the task name before stopping the timer.
+                </Dialog>
             </div>
         )
     }
@@ -100,4 +140,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { addEvent, toggleTimer })(Timer);
+export default connect(mapStateToProps, { addEvent, startTimer, stopTimer })(Timer);

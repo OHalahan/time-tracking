@@ -1,7 +1,8 @@
 import {
     ADD_EVENT,
     DELETE_EVENT,
-    TOGGLE_TIMER
+    START_TIMER,
+    STOP_TIMER
 } from '../constants';
 
 export const addEvent = (name, start, stop, spent) => {
@@ -23,9 +24,16 @@ export const deleteEvent = (event) => {
     return action;
 }
 
-export const toggleTimer = () => {
+export const startTimer = () => {
     const action = {
-        type: TOGGLE_TIMER
+        type: START_TIMER
+    }
+    return action;
+}
+
+export const stopTimer = () => {
+    const action = {
+        type: STOP_TIMER
     }
     return action;
 }
