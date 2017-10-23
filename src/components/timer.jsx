@@ -32,9 +32,22 @@ class Timer extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps.store.timer.running !== this.props.store.timer.running) {
+        const currTimer = this.props.store.timer;
+        const newTimer = newProps.store.timer;
+
+        if (newTimer.running !== currTimer.running) {
             this.setLabel(newProps.store.timer.running);
+            // Q: Is there any other way to check that Timer has been stopped and then trigger event
+            if (!newTimer.running && newTimer.stop !== currTimer.stop) {
+                this.props.addEvent(
+                    this.state.taskName,
+                    newTimer.start,
+                    newTimer.stop,
+                    this.state.timePassed
+                );
+            }
         }
+
     }
 
     handleClose() {
@@ -75,12 +88,6 @@ class Timer extends Component {
         } else {
             if (timer.running) {
                 this.props.stopTimer();
-                this.props.addEvent(
-                    this.state.taskName,
-                    timer.start,
-                    timer.stop,
-                    this.state.timePassed
-                );
                 this.stopCounter();
             } else {
                 this.props.startTimer();

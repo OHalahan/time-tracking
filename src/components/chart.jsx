@@ -40,4 +40,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {})(Chart);
+export default connect(mapStateToProps)(Chart);
