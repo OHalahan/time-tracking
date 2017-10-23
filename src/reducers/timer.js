@@ -1,6 +1,5 @@
+import { bake_cookie, read_cookie } from 'sfcookies';
 import moment from 'moment';
-
-import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
 
 import { START_TIMER, STOP_TIMER } from '../constants';
 
@@ -18,9 +17,10 @@ const stopTimer = (state) => {
 
 const timer = (state, action) => {
     let newTimer = null;
-    delete_cookie('timer');
+
     state = read_cookie('taskTimer');
-    if (!(state)) {
+
+    if (!state || Object.keys(read_cookie('taskTimer')).length === 0) {
         state = {
             start: null,
             stop: null,
@@ -35,7 +35,7 @@ const timer = (state, action) => {
             return newTimer;
         case STOP_TIMER:
             newTimer = stopTimer(state);
-            bake_cookie('taskTimer', newTimer);
+            bake_cookie('taskTimer', newTimer);         
             return newTimer;
         default:
             return state;
