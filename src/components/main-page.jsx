@@ -6,7 +6,7 @@ import Chart from './chart';
 
 class MainPage extends Component {
     render() {
-        return ( 
+        return (
             <div>
                 <Timer />
                 <MainTable />
