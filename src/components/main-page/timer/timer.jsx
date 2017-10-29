@@ -8,7 +8,7 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 
-import { addEvent, startTimer, stopTimer } from '../actions';
+import { addEvent, startTimer, stopTimer } from '../../../actions';
 
 const TIME_START = '00:00:00';
 
