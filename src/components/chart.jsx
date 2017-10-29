@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 
 class Chart extends Component {
     renderIntervals() {
-        const { intervals } = this.props.store;
+        const { intervals } = this.props;
         return (
             intervals.map((interval, index) => {
                 return (
@@ -16,17 +16,17 @@ class Chart extends Component {
     }
 
     // Values are in seconds. Divide by 60 to display in minutes
-    scaleLabel(val) {
+    scaleLabel = val => {
         return Math.round(val / 60);
     }
 
     render() {
         return (
             <BarChart width={1080} height={400} data={this.renderIntervals()} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <YAxis dataKey="seconds" domain={[0, 3600]} tickFormatter={label => this.scaleLabel(label)} />
+                <YAxis dataKey="seconds" domain={[0, 3600]} tickFormatter={this.scaleLabel} />
                 <XAxis dataKey="hour" />
                 <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip formatter={label => this.scaleLabel(label)} />
+                <Tooltip formatter={this.scaleLabel} />
                 <Legend />
                 <Bar dataKey="seconds" name="Minutes in hour" fill="#8884d8" />
             </BarChart>
@@ -36,7 +36,7 @@ class Chart extends Component {
 
 function mapStateToProps(state) {
     return {
-        store: state
+        intervals: state.intervals
     }
 }
 

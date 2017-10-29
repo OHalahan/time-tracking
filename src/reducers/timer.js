@@ -4,15 +4,19 @@ import moment from 'moment';
 import { START_TIMER, STOP_TIMER } from '../constants';
 
 const startTimer = (state) => {
-    state.start = moment(new Date());
-    state.running = true;
-    return state;
+    return {
+        ...state,
+        start: moment(new Date()),
+        running: true
+    }
 }
 
 const stopTimer = (state) => {
-    state.stop = moment(new Date());
-    state.running = false;
-    return state;
+    return {
+        ...state,
+        stop: moment(new Date()),
+        running: false
+    }
 }
 
 const timer = (state, action) => {
@@ -35,7 +39,7 @@ const timer = (state, action) => {
             return newTimer;
         case STOP_TIMER:
             newTimer = stopTimer(state);
-            bake_cookie('taskTimer', newTimer);         
+            bake_cookie('taskTimer', newTimer);
             return newTimer;
         default:
             return state;
