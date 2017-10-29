@@ -10,8 +10,8 @@ import reducers from './reducers/index';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import MainPage from './components/main-page';
-import Info from './components/info';
+import MainPage from './components/main-page/main-page';
+import Info from './components/info/info';
 
 const store = createStore(reducers);
 

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { connect } from 'react-redux';
 
-import { deleteEvent } from '../actions';
+import { deleteEvent } from '../../../actions';
 
 import {
     Table,
