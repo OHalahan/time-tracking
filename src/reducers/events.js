@@ -21,7 +21,8 @@ const events = (state = [], action) => {
     state = read_cookie('events');
     switch (action.type) {
         case ADD_EVENT:
-            events = [...state, event(action, state.length)];
+            let lastElem = state[state.length - 1];
+            events = [...state, event(action, lastElem ? lastElem.id : 0)];
             bake_cookie('events', events);
             return events;
         case DELETE_EVENT:

@@ -5,8 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 class Info extends Component {
     render() {
-        const { events } = this.props.store;
-        const { match, history } = this.props;
+        const { events, match, history } = this.props;
 
         if (events.some(event => event.id === Number(match.params.eventId))) {
             return (
@@ -29,7 +28,7 @@ class Info extends Component {
 
 function mapStateToProps(state) {
     return {
-        store: state
+        events: state.events
     }
 }
 

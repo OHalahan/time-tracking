@@ -24,7 +24,7 @@ class MainTable extends Component {
     }
 
     renderEvents() {
-        const { events } = this.props.store;
+        const { events } = this.props;
         return (
             events.map(event => {
                 return (
@@ -81,7 +81,7 @@ MainTable.contextTypes = {
 
 function mapStateToProps(state) {
     return {
-        store: state
+        events: state.events
     }
 }
 

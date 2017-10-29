@@ -6,34 +6,30 @@ import {
 } from '../constants';
 
 export const addEvent = (name, start, stop, spent) => {
-    const action = {
+    return {
         type: ADD_EVENT,
         name,
         start,
         stop,
         spent
     }
-    return action;
 }
 
 export const deleteEvent = (event) => {
-    const action = {
+    return {
         type: DELETE_EVENT,
         event
-    }
-    return action;
+    };
 }
 
 export const startTimer = () => {
-    const action = {
+    return {
         type: START_TIMER
-    }
-    return action;
+    };
 }
 
 export const stopTimer = () => {
-    const action = {
+    return {
         type: STOP_TIMER
-    }
-    return action;
+    };
 }

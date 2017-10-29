@@ -26,18 +26,17 @@ class Timer extends Component {
     }
 
     componentWillMount() {
-        const running = this.props.store.timer.running;
+        const running = this.props.timer.running;
         this.setLabel(running);
         if (running) { this.startCounter() };
     }
 
     componentWillReceiveProps(newProps) {
-        const currTimer = this.props.store.timer;
-        const newTimer = newProps.store.timer;
+        const currTimer = this.props.timer;
+        const newTimer = newProps.timer;
 
         if (newTimer.running !== currTimer.running) {
-            this.setLabel(newProps.store.timer.running);
-            // Q: Is there any other way to check that Timer has been stopped and then trigger event
+            this.setLabel(newProps.timer.running);
             if (!newTimer.running && newTimer.stop !== currTimer.stop) {
                 this.props.addEvent(
                     this.state.taskName,
@@ -50,7 +49,7 @@ class Timer extends Component {
 
     }
 
-    handleClose() {
+    handleClose = () => {
         this.setState({
             showDialog: false
         });
@@ -64,7 +63,7 @@ class Timer extends Component {
 
     startCounter() {
         this.counterLink = setInterval(() => {
-            let diff = moment(moment(new Date()).diff(this.props.store.timer.start)).utc().format('HH:mm:ss');
+            let diff = moment(moment(new Date()).diff(this.props.timer.start)).utc().format('HH:mm:ss');
             this.setState({
                 timePassed: diff
             })
@@ -79,8 +78,8 @@ class Timer extends Component {
         })
     }
 
-    toggleState() {
-        const { timer } = this.props.store;
+    toggleState = () => {
+        const { timer } = this.props;
         if (timer.running && !this.state.taskName) {
             this.setState({
                 showDialog: true
@@ -102,7 +101,7 @@ class Timer extends Component {
             <FlatButton
                 label="Close"
                 primary={true}
-                onClick={() => this.handleClose()}
+                onClick={this.handleClose}
             />
         ];
         const style = {
@@ -124,7 +123,7 @@ class Timer extends Component {
                     {this.state.timePassed}
                 </Paper>
                 <RaisedButton
-                    onClick={() => this.toggleState()}
+                    onClick={this.toggleState}
                     label={this.state.action}
                 />
                 <Dialog
@@ -132,7 +131,7 @@ class Timer extends Component {
                     actions={dialogActions}
                     modal={false}
                     open={this.state.showDialog}
-                    onRequestClose={() => this.handleClose()}
+                    onRequestClose={this.handleClose}
                 >
                     Task name is empty. Please, fill in the task name before stopping the timer.
                 </Dialog>
@@ -143,7 +142,7 @@ class Timer extends Component {
 
 function mapStateToProps(state) {
     return {
-        store: state
+        timer: state.timer
     }
 }
 
