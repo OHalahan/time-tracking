@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { 
+    BarChart, 
+    Bar, 
+    XAxis, 
+    YAxis, 
+    CartesianGrid, 
+    Tooltip, 
+    Legend, 
+    ResponsiveContainer 
+} from 'recharts';
+
+import styles from './chart-material';
 
 class Chart extends Component {
     renderIntervals() {
@@ -22,14 +33,16 @@ class Chart extends Component {
 
     render() {
         return (
-            <BarChart width={1080} height={400} data={this.renderIntervals()} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <YAxis dataKey="seconds" domain={[0, 3600]} tickFormatter={this.scaleLabel} />
-                <XAxis dataKey="hour" />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip formatter={this.scaleLabel} />
-                <Legend />
-                <Bar dataKey="seconds" name="Minutes in hour" fill="#8884d8" />
-            </BarChart>
+            <ResponsiveContainer width={styles.width} aspect={3.0/1.0}>
+                <BarChart data={this.renderIntervals()} margin={styles.margin}>
+                    <YAxis dataKey="seconds" domain={[0, 3600]} tickFormatter={this.scaleLabel} />
+                    <XAxis dataKey="hour" />
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <Tooltip formatter={this.scaleLabel} />
+                    <Legend />
+                    <Bar dataKey="seconds" name="Minutes in hour" fill={styles.color} />
+                </BarChart>
+            </ResponsiveContainer>
         )
     }
 }

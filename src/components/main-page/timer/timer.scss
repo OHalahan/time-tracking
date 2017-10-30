@@ -1,0 +1,21 @@
+$primary-color: #64B5F6;
+
+.timer-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.paper {
+    height: 200px;
+    width: 200px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: $primary-color !important;
+}
+
+.button {
+    color: $primary-color !important;
+}

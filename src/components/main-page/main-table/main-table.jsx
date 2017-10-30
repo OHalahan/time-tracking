@@ -17,6 +17,8 @@ import {
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import styles from './main-table-material';
+
 class MainTable extends Component {
 
     deleteEvent(id) {
@@ -36,11 +38,13 @@ class MainTable extends Component {
                         <TableRowColumn>{event.spent}</TableRowColumn>
                         <TableRowColumn>
                             <RaisedButton label='info'
+                                labelColor={styles.buttonStyle.color}
                                 onClick={() => this.context.router.history.push(`/${event.id}`)}
                             />
                         </TableRowColumn>
                         <TableRowColumn>
                             <RaisedButton
+                                labelColor={styles.buttonStyle.color}
                                 label='delete'
                                 onClick={() => this.deleteEvent(event)}
                             />
@@ -53,7 +57,7 @@ class MainTable extends Component {
 
     render() {
         return (
-            <Table>
+            <Table height={styles.height} fixedHeader={true}>
                 <TableHeader
                     displaySelectAll={false}
                     adjustForCheckbox={false}>
@@ -67,7 +71,7 @@ class MainTable extends Component {
                         <TableHeaderColumn></TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
-                <TableBody displayRowCheckbox={false}>
+                <TableBody displayRowCheckbox={false} style={styles.bodyStyle}>
                     {this.renderEvents()}
                 </TableBody>
             </Table>
