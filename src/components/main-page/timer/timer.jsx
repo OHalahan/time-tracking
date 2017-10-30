@@ -27,12 +27,21 @@ class Timer extends Component {
         }
 
         this.counterLink = null;
+        this._mounted = false;
     }
 
     componentWillMount() {
         const running = this.props.timer.running;
         this.setLabel(running);
         if (running) { this.startCounter() };
+    }
+
+    componentDidMount() {
+        this._mounted = true;
+    }
+
+    componentWillUnmount() {
+        this._mounted = false;
     }
 
     componentWillReceiveProps(newProps) {
@@ -67,10 +76,12 @@ class Timer extends Component {
 
     startCounter() {
         this.counterLink = setInterval(() => {
-            let diff = moment(moment(new Date()).diff(this.props.timer.start)).utc().format('HH:mm:ss');
-            this.setState({
-                timePassed: diff
-            })
+            if (this._mounted) {
+                let diff = moment(moment(new Date()).diff(this.props.timer.start)).utc().format('HH:mm:ss');
+                this.setState({
+                    timePassed: diff
+                })
+            }
         }, 1000);
     }
 
