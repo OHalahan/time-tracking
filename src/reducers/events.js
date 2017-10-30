@@ -1,4 +1,8 @@
-import { ADD_EVENT, DELETE_EVENT } from '../constants';
+import {
+    ADD_EVENT,
+    DELETE_EVENT,
+    SAVE_EVENT_NAME
+} from '../constants';
 
 import { bake_cookie, read_cookie } from 'sfcookies';
 
@@ -16,6 +20,15 @@ const removeById = (state = [], id) => {
     return state.filter(event => event.id !== id);
 }
 
+const saveNameById = (state = [], id, name) => {
+    state.forEach(event => {
+        if (event.id === id) {
+            event.name = name;
+        }
+    });
+    return [...state];
+}
+
 const events = (state = [], action) => {
     let events = null;
     state = read_cookie('events');
@@ -27,7 +40,11 @@ const events = (state = [], action) => {
             return events;
         case DELETE_EVENT:
             events = removeById(state, action.event.id);
-            bake_cookie('events', events);            
+            bake_cookie('events', events);
+            return events;
+        case SAVE_EVENT_NAME:
+            events = saveNameById(state, action.id, action.name);
+            bake_cookie('events', events);
             return events;
         default:
             return state;

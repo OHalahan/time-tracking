@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { 
-    BarChart, 
-    Bar, 
-    XAxis, 
-    YAxis, 
-    CartesianGrid, 
-    Tooltip, 
-    Legend, 
-    ResponsiveContainer 
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    ResponsiveContainer
 } from 'recharts';
 
 import styles from './chart-material';
@@ -33,7 +33,7 @@ class Chart extends Component {
 
     render() {
         return (
-            <ResponsiveContainer width={styles.width} aspect={3.0/1.0}>
+            <ResponsiveContainer width={styles.width} aspect={3.0 / 1.0}>
                 <BarChart data={this.renderIntervals()} margin={styles.margin}>
                     <YAxis dataKey="seconds" domain={[0, 3600]} tickFormatter={this.scaleLabel} />
                     <XAxis dataKey="hour" />

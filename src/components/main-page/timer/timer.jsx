@@ -102,7 +102,7 @@ class Timer extends Component {
 
     validateInput = () => {
         this.setState({
-            errorText: this.state.taskName ? '' : 'Task name is required' 
+            errorText: this.state.taskName ? '' : 'Task name is required'
         });
     }
 
