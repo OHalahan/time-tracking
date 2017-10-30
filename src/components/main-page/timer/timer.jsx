@@ -10,6 +10,9 @@ import Dialog from 'material-ui/Dialog';
 
 import { addEvent, startTimer, stopTimer } from '../../../actions';
 
+import styles from './timer.scss';
+import stylesMaterial from './timer-material';
+
 const TIME_START = '00:00:00';
 
 class Timer extends Component {
@@ -19,7 +22,8 @@ class Timer extends Component {
             action: '',
             timePassed: TIME_START,
             taskName: '',
-            showDialog: false
+            showDialog: false,
+            errorText: ''
         }
 
         this.counterLink = null;
@@ -81,6 +85,7 @@ class Timer extends Component {
     toggleState = () => {
         const { timer } = this.props;
         if (timer.running && !this.state.taskName) {
+            this.validateInput();
             this.setState({
                 showDialog: true
             });
@@ -95,34 +100,38 @@ class Timer extends Component {
         }
     }
 
+    validateInput = () => {
+        this.setState({
+            errorText: this.state.taskName ? '' : 'Task name is required' 
+        });
+    }
 
     render() {
         const dialogActions = [
             <FlatButton
+                labelStyle={stylesMaterial.buttonStyles}
                 label="Close"
                 primary={true}
                 onClick={this.handleClose}
             />
         ];
-        const style = {
-            height: 200,
-            width: 200,
-            margin: 20,
-            textAlign: 'center',
-            display: 'inline-block'
-        };
         return (
-            <div>
+            <div className={styles['timer-container']}>
                 <TextField
                     floatingLabelText="Task name"
                     value={this.state.taskName}
                     onChange={event => this.setState({ taskName: event.target.value })}
-                    errorText={this.state.taskName ? '' : 'Task name is required'}
+                    errorText={this.state.errorText}
+                    floatingLabelStyle={stylesMaterial.floatingLabelStyle}
+                    underlineFocusStyle={stylesMaterial.underlineStyle}
+                    onFocus={this.validateInput}
+                    onBlur={this.validateInput}
                 />
-                <Paper style={style} zDepth={1} circle={true}>
+                <Paper className={styles.paper} zDepth={1} circle={true}>
                     {this.state.timePassed}
                 </Paper>
                 <RaisedButton
+                    labelColor={stylesMaterial.buttonStyle.color}
                     onClick={this.toggleState}
                     label={this.state.action}
                 />
