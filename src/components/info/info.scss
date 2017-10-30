@@ -22,8 +22,6 @@ $primary-color: #64B5F6;
 .button-container {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    // not sure about this margin (strange width)
-    margin-right: 40px;
     justify-content: flex-end;
+    width: 256px;
 }

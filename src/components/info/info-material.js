@@ -11,8 +11,7 @@ const stylesMaterial = {
         color: primaryColor,
         marginTop: '15px',
         marginBottom: '15px',
-        marignLeft: '5px',
-        marginRight: '5px'
+        marignLeft: '5px'
     },
     raisedLabelColor: '#FFFFFF'
 }
