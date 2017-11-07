@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 
-import Timer from './timer/timer';
-import MainTable from './main-table/main-table';
-import Chart from './chart/chart';
+import Timer from './timer/Timer';
+import MainTable from './main-table/MainTable';
+import Chart from './chart/Chart';
 
 import classnames from 'classnames';
 
-import styles from './main-page.scss';
+import styles from './MainPage.scss';
 
 class MainPage extends Component {
     render() {
         return (
-            <div className={styles['main-container']}>
+            <div className={styles.mainContainer}>
                 <Timer />
-                <div className={styles['data-container']}>
+                <div className={styles.dataContainer}>
                     <MainTable />
                 </div>
                 <div className={
                     classnames(
-                        styles['data-container'], 
-                        styles['chart-container']
+                        styles.dataContainer,
+                        styles.chartContainer
                     )}>
                     <Chart />
                 </div>

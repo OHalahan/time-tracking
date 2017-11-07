@@ -10,8 +10,8 @@ import Dialog from 'material-ui/Dialog';
 
 import { addEvent, startTimer, stopTimer } from '../../../actions';
 
-import styles from './timer.scss';
-import stylesMaterial from './timer-material';
+import styles from './Timer.scss';
+import stylesMaterial from './TimerStyles';
 
 const TIME_START = '00:00:00';
 
@@ -127,7 +127,7 @@ class Timer extends Component {
             />
         ];
         return (
-            <div className={styles['timer-container']}>
+            <div className={styles.timerContainer}>
                 <TextField
                     floatingLabelText="Task name"
                     value={this.state.taskName}
