@@ -1,0 +1,15 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    align-items: center;
+    .dataContainer {
+        display: flex;
+        width: 80%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .chartContainer {
+        height: 300px;
+    }
+}

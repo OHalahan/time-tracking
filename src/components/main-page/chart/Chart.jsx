@@ -12,7 +12,7 @@ import {
     ResponsiveContainer
 } from 'recharts';
 
-import styles from './chart-material';
+import styles from './ChartStyles';
 
 class Chart extends Component {
     renderIntervals() {

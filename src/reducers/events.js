@@ -21,12 +21,12 @@ const removeById = (state = [], id) => {
 }
 
 const saveNameById = (state = [], id, name) => {
-    state.forEach(event => {
+    return state.map(event => {
         if (event.id === id) {
             event.name = name;
         }
+        return event;
     });
-    return [...state];
 }
 
 const events = (state = [], action) => {

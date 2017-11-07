@@ -17,7 +17,7 @@ import {
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import styles from './main-table-material';
+import styles from './MainTableStyles';
 
 class MainTable extends Component {
 
